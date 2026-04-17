@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Members — G12-01CPG</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <nav id="header">
+    <h1 id="title"><a href="index.html">UMAK HUB</a></h1>
+    <div id="nav-center">
+      <a href="index.html"    class="navs">ʜᴏᴍᴇ</a>
+      <a href="aboutus.html"  class="navs">ᴀʙᴏᴜᴛ ᴜꜱ</a>
+      <a href="members.html"  class="navs active">ᴍᴇᴍʙᴇʀꜱ</a>
+      <a href="progress.html" class="navs">ᴘʀᴏɢʀᴇꜱꜱ</a>
+    </div>
+    <button id="cta-btn">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      UPDATE
+    </button>
+    <button id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="drawer-inner">
+      <a href="index.html"    onclick="closeMenu(event)">ʜᴏᴍᴇ</a>
+      <a href="aboutus.html"  onclick="closeMenu(event)">ᴀʙᴏᴜᴛ ᴜꜱ</a>
+      <a href="members.html"  onclick="closeMenu(event)">ᴍᴇᴍʙᴇʀꜱ</a>
+      <a href="progress.html" onclick="closeMenu(event)">ᴘʀᴏɢʀᴇꜱꜱ</a>
+      <div class="drawer-divider"></div>
+      <button class="btn-drawer" onclick="closeMenu(event); openModal();">+ UPDATE HOURS</button>
+    </div>
+  </div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+
+  <div class="page-wrap">
+
+    <!-- Feature 5: Sticky header wrapper -->
+    <div class="members-sticky">
+      <h2 class="sec-title">SECTION MEMBERS</h2>
+      <input type="text" placeholder="Search member..." id="searchbar"/>
+      <span class="sec-badge navy" id="member-count-badge">38 Students</span>
+    </div>
+
+    <section id="members-grid">
+      <div id="no-results">No members found matching your search...</div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-head-title">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+          <span id="modalTitle">SELECT STUDENT</span>
+        </div>
+        
+      </div>
+      <div class="modal-body">
+        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:14px;">
+          Choose your name to go to your profile and log hours there.
+        </p>
+        <input
+          type="text"
+          id="studentPickerSearch"
+          class="finput"
+          placeholder="Search your name…"
+          style="margin-bottom:12px;"
+          autocomplete="off"
+        />
+        <div id="studentPickerList" style="
+          max-height:320px; overflow-y:auto;
+          display:flex; flex-direction:column; gap:6px;
+        ">
+          <p style="color:var(--text-muted);font-size:.84rem;">Loading students…</p>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-danger" id="modalCancel">ᴄʟᴏꜱᴇ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <div class="toast-dot"></div>
+    <span id="toastMsg">Hours logged!</span>
+  </div>
+
+  <footer>
+    <p>G12-01CPG · <span>University of Makati </span> · Work Immersion Portfolio <span id=" "></span></p>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
