@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Set Up Your Profile — UMAK HUB</title>
+  <link rel="stylesheet" href="style.css"/>
+ </head>
+<body>
+  <div id="overlay"></div>
+  <nav id="header">
+    <h1 id="title"><a href="landingpage.html">UMAK HUB</a></h1>
+    <div id="nav-center"></div>
+    <button class="btn-danger" onclick="handleSignOut()" style="font-size:.78rem;padding:8px 16px;">Sign Out</button>
+  </nav>
+
+  <div class="setup-wrap">
+    <div class="setup-container">
+
+      <!-- Progress Steps -->
+      <div class="setup-progress" id="setupProgress">
+        <div class="setup-step-dot active" id="dot-1">
+          <div class="sdot">1</div>
+          <div class="sdot-label">Basic Info</div>
+        </div>
+        <div class="setup-step-dot" id="dot-2">
+          <div class="sdot">2</div>
+          <div class="sdot-label">Section</div>
+        </div>
+        <div class="setup-step-dot" id="dot-3">
+          <div class="sdot">3</div>
+          <div class="sdot-label">Photo</div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="setup-card" id="setupCard">
+        <div class="setup-head" id="setupHead">
+          <h2 id="setupHeadTitle">Tell us about yourself</h2>
+          <p id="setupHeadSub">Step 1 of 3 — Basic information</p>
+        </div>
+
+        <div class="setup-body">
+          <!-- STEP 1: Basic Info -->
+          <div class="setup-panel active" id="panel-1">
+            <div class="setup-frow">
+              <div class="setup-fgroup">
+                <label class="setup-flabel">First Name *</label>
+                <input type="text" class="setup-input" id="s-first" placeholder="Juan" autocomplete="given-name"/>
+              </div>
+              <div class="setup-fgroup">
+                <label class="setup-flabel">Last Name *</label>
+                <input type="text" class="setup-input" id="s-last" placeholder="Dela Cruz" autocomplete="family-name"/>
+              </div>
+            </div>
+            <div class="setup-fgroup">
+              <label class="setup-flabel">Bio <span class="opt">(optional)</span></label>
+              <textarea class="setup-textarea" id="s-bio" placeholder="A short intro about yourself and your immersion experience…"></textarea>
+            </div>
+          </div>
+
+          <!-- STEP 2: Section & School -->
+          <div class="setup-panel" id="panel-2">
+            <div class="setup-fgroup">
+              <label class="setup-flabel">School *</label>
+              <input type="text" class="setup-input" id="s-school" value="University of Makati" placeholder="Your school name"/>
+            </div>
+            <div class="setup-frow">
+              <div class="setup-fgroup">
+                <label class="setup-flabel">Section *</label>
+                <input type="text" class="setup-input" id="s-section" placeholder="e.g. G12-01CPG"/>
+              </div>
+              <div class="setup-fgroup">
+                <label class="setup-flabel">Strand</label>
+                <select class="setup-select" id="s-strand">
+                  <option value="ICT">ICT</option>
+                  <option value="STEM">STEM</option>
+                  <option value="ABM">ABM</option>
+                  <option value="HUMSS">HUMSS</option>
+                  <option value="GAS">GAS</option>
+                  <option value="TVL">TVL</option>
+                </select>
+              </div>
+            </div>
+            <div class="setup-fgroup">
+              <label class="setup-flabel">Required Immersion Hours *</label>
+              <input type="number" class="setup-input" id="s-total" value="80" min="1" max="500"/>
+              <div class="hours-hint">Most ICT students complete 80 hours. Check with your teacher if unsure.</div>
+            </div>
+            <div class="setup-fgroup">
+              <label class="setup-flabel">Set Your Profile PIN *</label>
+              <input type="password" class="setup-input" id="s-pin" placeholder="4-digit PIN to access your journal" maxlength="4"/>
+              <div class="hours-hint">Your PIN protects your hour log. Don't use "1234".</div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Photo -->
+          <div class="setup-panel" id="panel-3">
+            <div class="avatar-upload-area">
+              <div class="avatar-preview" id="avatarPreview">?</div>
+              <label for="avatarFileInput" class="avatar-upload-btn">Upload Photo</label>
+              <input type="file" id="avatarFileInput" accept="image/*" hidden/>
+              <div class="avatar-note">Optional. JPG, PNG, WebP — max 5MB.</div>
+            </div>
+            <div class="setup-fgroup">
+              <label class="setup-flabel">Preview</label>
+              <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;display:flex;align-items:center;gap:14px;">
+                <div id="previewAvatarSmall" style="width:48px;height:48px;border-radius:50%;background:var(--navy-soft);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:.9rem;font-weight:700;color:#5b7fff;overflow:hidden;flex-shrink:0;"></div>
+                <div>
+                  <div style="font-family:var(--font-head);font-weight:700;font-size:.9rem;" id="previewName">Your Name</div>
+                  <div style="font-size:.75rem;color:var(--text-muted);" id="previewSection">Section · School</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setup-err" id="setupErr"></div>
+
+        <!-- Footer -->
+        <div class="setup-foot">
+          <button class="setup-back-btn" id="backBtn" onclick="prevStep()" style="display:none;">← Back</button>
+          <button class="setup-next-btn" id="nextBtn" onclick="nextStep()">
+            <div class="spinner"></div>
+            <span class="btn-text">Continue →</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase } from './supabase.js';
+    import { getSession, signOut as authSignOut } from './auth.js';
+
+    window.handleSignOut = authSignOut;
+
+    let currentStep = 1;
+    const TOTAL_STEPS = 3;
+    let session = null;
+    let avatarFile = null;
+
+    // Guard: must be logged in
+    (async () => {
+      session = await getSession();
+      if (!session) { window.location.replace('loginsignup.html'); return; }
+      // Check if profile already exists
+      const { data: existing } = await supabase.from('profiles').select('id').eq('id', session.user.id).single();
+      if (existing) { window.location.replace('dashboard.html'); return; }
+      // Pre-fill initials
+      updatePreview();
+    })();
+
+    // Avatar file select
+    document.getElementById('avatarFileInput').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      avatarFile = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const src = ev.target.result;
+        document.getElementById('avatarPreview').innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;"/>`;
+        document.getElementById('previewAvatarSmall').innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Input listeners to update preview on step 3
+    ['s-first','s-last','s-section','s-school'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', updatePreview);
+    });
+
+    function updatePreview() {
+      const first = document.getElementById('s-first')?.value.trim() || '';
+      const last  = document.getElementById('s-last')?.value.trim() || '';
+      const section = document.getElementById('s-section')?.value.trim() || 'Section';
+      const school  = document.getElementById('s-school')?.value.trim() || 'School';
+      const nameEl = document.getElementById('previewName');
+      const sectEl = document.getElementById('previewSection');
+      const smallAv = document.getElementById('previewAvatarSmall');
+      const bigAv = document.getElementById('avatarPreview');
+      if (nameEl) nameEl.textContent = (first || last) ? `${last}, ${first}` : 'Your Name';
+      if (sectEl) sectEl.textContent = `${section} · ${school}`;
+      if (!avatarFile) {
+        const initials = ((first[0] || '') + (last[0] || '')).toUpperCase() || '?';
+        if (smallAv && !smallAv.querySelector('img')) smallAv.textContent = initials;
+        if (bigAv && !bigAv.querySelector('img')) bigAv.textContent = initials;
+      }
+    }
+
+    function showErr(msg) {
+      const el = document.getElementById('setupErr');
+      el.textContent = msg; el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 4000);
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        const first = document.getElementById('s-first').value.trim();
+        const last  = document.getElementById('s-last').value.trim();
+        if (!first) { showErr('Please enter your first name.'); return false; }
+        if (!last)  { showErr('Please enter your last name.'); return false; }
+      }
+      if (step === 2) {
+        const school  = document.getElementById('s-school').value.trim();
+        const section = document.getElementById('s-section').value.trim();
+        const total   = parseInt(document.getElementById('s-total').value);
+        const pin     = document.getElementById('s-pin').value;
+        if (!school)   { showErr('Please enter your school name.'); return false; }
+        if (!section)  { showErr('Please enter your section.'); return false; }
+        if (!total || total < 1) { showErr('Please enter valid required hours.'); return false; }
+        if (!pin || pin.length !== 4 || isNaN(Number(pin))) { showErr('PIN must be exactly 4 digits.'); return false; }
+        if (pin === '1234') { showErr('Please choose a unique PIN — "1234" is not allowed.'); return false; }
+      }
+      return true;
+    }
+
+    window.nextStep = async function() {
+      if (!validateStep(currentStep)) return;
+
+      if (currentStep < TOTAL_STEPS) {
+        goToStep(currentStep + 1);
+        return;
+      }
+
+      // Final step — save profile
+      const btn = document.getElementById('nextBtn');
+      btn.classList.add('loading'); btn.disabled = true;
+
+      try {
+        let avatarUrl = null;
+        if (avatarFile) {
+          const ext = (avatarFile.name.split('.').pop() || 'jpg').toLowerCase();
+          const path = `${session.user.id}/avatar_${Date.now()}.${ext}`;
+          const { error: upErr } = await supabase.storage
+            .from('profile-pictures').upload(path, avatarFile, { upsert: true });
+          if (!upErr) {
+            const { data: urlData } = supabase.storage.from('profile-pictures').getPublicUrl(path);
+            avatarUrl = urlData.publicUrl;
+          }
+        }
+
+        const { error } = await supabase.from('profiles').insert({
+          id:         session.user.id,
+          email:      session.user.email,
+          first_name: document.getElementById('s-first').value.trim(),
+          last_name:  document.getElementById('s-last').value.trim(),
+          bio:        document.getElementById('s-bio').value.trim() || null,
+          school:     document.getElementById('s-school').value.trim(),
+          section:    document.getElementById('s-section').value.trim(),
+          total:      parseInt(document.getElementById('s-total').value) || 80,
+          pin:        document.getElementById('s-pin').value,
+          avatar_url: avatarUrl,
+          hours:      0,
+          days:       0,
+        });
+
+        if (error) { showErr('Error saving profile: ' + error.message); btn.classList.remove('loading'); btn.disabled = false; return; }
+
+        // Show complete screen
+        document.getElementById('setupCard').innerHTML = `
+          <div class="setup-complete">
+            <div class="complete-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="complete-title">Profile Created!</div>
+            <div class="complete-sub">Welcome to UMAK HUB, ${document.getElementById('s-first').value.trim()}. Your immersion journey starts now.</div>
+            <a href="dashboard.html" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+              Go to Dashboard →
+            </a>
+          </div>`;
+        document.getElementById('setupProgress').style.opacity = '0.4';
+
+      } catch (err) {
+        showErr('Something went wrong. Please try again.');
+        btn.classList.remove('loading'); btn.disabled = false;
+      }
+    };
+
+    window.prevStep = function() {
+      if (currentStep > 1) goToStep(currentStep - 1);
+    };
+
+    function goToStep(n) {
+      // Dots
+      document.querySelectorAll('.setup-step-dot').forEach((el, i) => {
+        el.classList.remove('active', 'done');
+        if (i + 1 < n) el.classList.add('done');
+        if (i + 1 === n) el.classList.add('active');
+      });
+      // Panels
+      document.querySelectorAll('.setup-panel').forEach((el, i) => {
+        el.classList.toggle('active', i + 1 === n);
+      });
+      // Head text
+      const heads = [
+        { title: 'Tell us about yourself', sub: 'Step 1 of 3 — Basic information' },
+        { title: 'Your section & program', sub: 'Step 2 of 3 — School details' },
+        { title: 'Add a profile photo', sub: 'Step 3 of 3 — Almost done!' },
+      ];
+      document.getElementById('setupHeadTitle').textContent = heads[n - 1].title;
+      document.getElementById('setupHeadSub').textContent   = heads[n - 1].sub;
+      // Back button
+      document.getElementById('backBtn').style.display = n > 1 ? 'block' : 'none';
+      // Next button text
+      document.querySelector('#nextBtn .btn-text').textContent = n === TOTAL_STEPS ? 'Create Profile ✓' : 'Continue →';
+      currentStep = n;
+      if (n === 3) updatePreview();
+    }
+  </script>
+</body>
+</html>

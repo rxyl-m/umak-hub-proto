@@ -3,137 +3,22 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>G12-01CPG — Portfolio</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>UMAK HUB</title>
 </head>
 <body>
-  <div id="overlay"></div>
-
-  <nav id="header">
-    <h1 id="title"><a href="index.html">UMAK HUB</a></h1>
-    <div id="nav-center">
-      <a href="index.html"    class="navs active">ʜᴏᴍᴇ</a>
-      <a href="aboutus.html"  class="navs">ᴀʙᴏᴜᴛ ᴜꜱ</a>
-      <a href="members.html"  class="navs">ᴍᴇᴍʙᴇʀꜱ</a>
-      <a href="progress.html" class="navs">ᴘʀᴏɢʀᴇꜱꜱ</a>
-    </div>
-    <button id="cta-btn">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      UPDATE
-    </button>
-    <button id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
-    <div class="drawer-inner">
-      <a href="index.html"    onclick="closeMenu(event)">ʜᴏᴍᴇ</a>
-      <a href="aboutus.html"  onclick="closeMenu(event)">ᴀʙᴏᴜᴛ ᴜꜱ</a>
-      <a href="members.html"  onclick="closeMenu(event)">ᴍᴇᴍʙᴇʀꜱ</a>
-      <a href="progress.html" onclick="closeMenu(event)">ᴘʀᴏɢʀᴇꜱꜱ</a>
-      <div class="drawer-divider"></div>
-      <button class="btn-drawer" onclick="closeMenu(event); openModal();">+ UPDATE HOURS</button>
-    </div>
+  <div class="redir">
+    <h2>UMAK HUB</h2>
+    <p>Redirecting…</p>
   </div>
-  <div class="nav-backdrop" id="navBackdrop"></div>
-
-  <main id="mainsec">
-    <p id="hero2">THE <span id="special"></span></p>
-    <h1 class="text-shine">G12-01CPG</h1>
-    <p id="school">UNIVERSITY OF MAKATI</p>
-    <div class="scroll-hint">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-      SCROLL
-    </div>
-  </main>
-
-  <div class="page-wrap page-wrap--flush">
-    <div class="tracker-card">
-      <div class="tracker-card-accent"></div>
-      <div class="sec-hdr">
-        <h2 class="sec-title">Work Immersion Tracker</h2>
-        <span class="sec-badge amber">IN PROGRESS</span>
-      </div>
-      <div class="tracker-top">
-        <div>
-          <p class="tracker-title">University of Makati — G12-01CPG</p>
-          <p class="tracker-sub">SY 2024–2025 · Work Immersion Program</p>
-        </div>
-        <button class="btn-primary" id="cta-btn-2" onclick="openModal()">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-          ADD HOURS
-        </button>
-      </div>
-      <div class="prog-lbl">
-        <span class="p-title">CLASS TOTAL HOURS</span>
-        <span class="p-count" id="hoursCount">0 / 3040 hrs</span>
-      </div>
-      <div class="prog-track">
-        <div class="prog-fill" id="progressBar" style="width:0%"></div>
-      </div>
-      <p class="prog-caption" id="progCaption">0% complete · 3040 hours remaining</p>
-      <div class="stat-row">
-        <div class="t-stat">
-          <div class="tv blue" id="displayLogged">0</div>
-          <div class="tl">Hours Logged</div>
-        </div>
-        <div class="t-stat">
-          <div class="tv amber" id="displayRemaining">3040</div>
-          <div class="tl">Hours Left</div>
-        </div>
-        <div class="t-stat">
-          <div class="tv green">38</div>
-          <div class="tl">Members</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Student Picker Modal (replaces the old Add Hours modal on home/progress) -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="modal-head">
-        <div class="modal-head-title">
-          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-          <span id="modalTitle">SELECT STUDENT</span>
-        </div>
-        
-      </div>
-      <div class="modal-body">
-        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:14px;">
-          Choose your name to go to your profile and log hours there.
-        </p>
-        <input
-          type="text"
-          id="studentPickerSearch"
-          class="finput"
-          placeholder="Search your name…"
-          style="margin-bottom:12px;"
-          autocomplete="off"
-        />
-        <div id="studentPickerList" style="
-          max-height:320px; overflow-y:auto;
-          display:flex; flex-direction:column; gap:6px;
-        ">
-          <p style="color:var(--text-muted);font-size:.84rem;">Loading students…</p>
-        </div>
-      </div>
-      <div class="modal-foot">
-        <button class="btn-danger" id="modalCancel">ᴄʟᴏꜱᴇ</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite">
-    <div class="toast-dot"></div>
-    <span id="toastMsg">Hours logged!</span>
-  </div>
-
-  <footer>
-    <p>G12-01CPG · <span>University of Makati</span> · Work Immersion Portfolio <span id="year"></span></p>
-  </footer>
-
-  <script type="module" src="script.js"></script>
+  <script type="module">
+    import { supabase } from './supabase.js';
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) { window.location.replace('landingpage.html'); return; }
+      const { data: profile } = await supabase.from('profiles').select('id').eq('id', session.user.id).single();
+      if (profile) { window.location.replace('dashboard.html'); }
+      else         { window.location.replace('profile-setup.html'); }
+    })();
+  </script>
 </body>
 </html>

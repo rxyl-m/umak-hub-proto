@@ -3,24 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>About Us — G12-01CPG</title>
+  <title>About Us — UMAK HUB</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div id="overlay"></div>
 
   <nav id="header">
-    <h1 id="title"><a href="index.html">UMAK HUB</a></h1>
-    <div id="nav-center">
-      <a href="index.html"    class="navs">ʜᴏᴍᴇ</a>
-      <a href="aboutus.html"  class="navs active">ᴀʙᴏᴜᴛ ᴜꜱ</a>
-      <a href="members.html"  class="navs">ᴍᴇᴍʙᴇʀꜱ</a>
-      <a href="progress.html" class="navs">ᴘʀᴏɢʀᴇꜱꜱ</a>
-    </div>
-    <button id="cta-btn">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      UPDATE
-    </button>
+    <h1 id="title"><a href="dashboard.html">UMAK HUB</a></h1>
     <button id="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -28,95 +18,76 @@
 
   <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
     <div class="drawer-inner">
-      <a href="index.html"    onclick="closeMenu(event)">ʜᴏᴍᴇ</a>
-      <a href="aboutus.html"  onclick="closeMenu(event)">ᴀʙᴏᴜᴛ ᴜꜱ</a>
-      <a href="members.html"  onclick="closeMenu(event)">ᴍᴇᴍʙᴇʀꜱ</a>
-      <a href="progress.html" onclick="closeMenu(event)">ᴘʀᴏɢʀᴇꜱꜱ</a>
+      <a href="dashboard.html" onclick="closeMenu(event)">Dashboard</a>
+      <a href="members.html"   onclick="closeMenu(event)">Members Directory</a>
+      <a href="aboutus.html"   onclick="closeMenu(event)">About Us</a>
       <div class="drawer-divider"></div>
-      <button class="btn-drawer" onclick="closeMenu(event); openModal();">+ UPDATE HOURS</button>
+      <button class="btn-drawer" onclick="handleSignOut()" style="background:var(--red-soft);color:#ff6677;margin-top:6px;">Sign Out</button>
     </div>
   </div>
   <div class="nav-backdrop" id="navBackdrop"></div>
 
-  <div class="page-wrap">
-    <div class="sec-hdr">
-      <h2 class="sec-title">ABOUT OUR CLASS</h2>
-      <span class="sec-badge navy">G12-01CPG</span>
-    </div>
-
-    <div class="content-card">
-      <h2>G12-01CPG</h2>
-      <p>Welcome to the official work immersion portfolio for our section from the University of Makati . This site documents our journey, completed hours, and technical experiences as we prepare for the professional IT world.</p>
-    </div>
-
-    <div class="content-card">
-      <h2>OUR MISSION</h2>
-      <p>To document every step of our work immersion experience — from day-one orientation to final assessments — providing a transparent and organized record of our growth as future IT professionals under the University of Makati 's academic program.</p>
-    </div>
-
-    <div class="content-card">
-      <h2>PROGRAM DETAILS</h2>
-      <p>Work Immersion is a specialized track under the Senior High School curriculum that places students in real industry environments. Our section is composed of ICT students completing 80 hours of on-site immersion.</p>
-      <div class="program-stats">
-        <div class="t-stat">
-          <div class="tv blue">80</div>
-          <div class="tl">Total Required Hours</div>
-        </div>
-        <div class="t-stat">
-          <div class="tv green">38</div>
-          <div class="tl">Section Members</div>
-        </div>
-        <div class="t-stat">
-          <div class="tv amber">ICT</div>
-          <div class="tl">Track / Strand</div>
-        </div>
+  <div class="dash-wrap">
+    <aside class="dash-sidebar">
+      <div class="dash-nav-card">
+        <a href="dashboard.html" class="dash-nav-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="members.html" class="dash-nav-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+          Members Directory
+        </a>
+        <a href="aboutus.html" class="dash-nav-item active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4l3 3"/></svg>
+          About UMak
+        </a>
       </div>
-    </div>
-  </div>
+    </aside>
 
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="modal-head">
-        <div class="modal-head-title">
-          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-          <span id="modalTitle">SELECT STUDENT</span>
-        </div>
-        
+    <main class="dash-main">
+      
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 6px;">
+        <h2 style="font-family:var(--font-head); font-size:1.3rem; font-weight:800; color:var(--text);">ABOUT UMAK & HSU</h2>
+        <span class="sec-badge navy">UNIVERSITY OF MAKATI</span>
       </div>
-      <div class="modal-body">
-        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:14px;">
-          Choose your name to go to your profile and log hours there.
+
+      <div class="section-card">
+        <div class="sec-hdr" style="margin-bottom:12px;">
+          <h2 class="sec-title">ABOUT THE UNIVERSITY</h2>
+        </div>
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.7;">
+          The University of Makati (UMak) is a public, locally funded university of the local government of Makati. It is envisioned as the primary instrument where university education and industry training programs interface to mold youth into productive citizens and IT-enabled professionals who are exposed to the cutting edge of technology in their areas of specialization.
         </p>
-        <input
-          type="text"
-          id="studentPickerSearch"
-          class="finput"
-          placeholder="Search your name…"
-          style="margin-bottom:12px;"
-          autocomplete="off"
-        />
-        <div id="studentPickerList" style="
-          max-height:320px; overflow-y:auto;
-          display:flex; flex-direction:column; gap:6px;
-        ">
-          <p style="color:var(--text-muted);font-size:.84rem;">Loading students…</p>
+      </div>
+
+      <div class="section-card">
+        <div class="sec-hdr" style="margin-bottom:12px;">
+          <h2 class="sec-title">UMAK VISION, MISSION & VALUES</h2>
         </div>
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.7;">
+          <strong style="color:var(--text);">Vision:</strong> University of Makati shall be a premier globally recognized local university where integrated and sustainable quality education translates to social equity and excellence.<br><br>
+          <strong style="color:var(--text);">Mission:</strong> To develop resilient, innovative, socially-responsible and excellent industry-ready practitioners and leaders through instruction, research, extension and production; and nurture highly competent and committed human resources.<br><br>
+          <strong style="color:var(--text);">Core Values (RISE):</strong> Resilience, Innovativeness, Social Responsibility, and Excellence.
+        </p>
       </div>
-      <div class="modal-foot">
-        <button class="btn-danger" id="modalCancel">ᴄʟᴏꜱᴇ</button>
+
+      <div class="section-card">
+        <div class="sec-hdr" style="margin-bottom:12px;">
+          <h2 class="sec-title">HIGHER SCHOOL NG UMAK (HSU)</h2>
+        </div>
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.7;">
+          <strong style="color:var(--text);">Vision:</strong> We envision our students who are competently prepared for higher education and world of work, culturally rooted, civic minded and imbued with core values such as Maka-Diyos, Maka-Bayan, Maka-Tao, at Maka-Kalikasan.<br><br>
+          <strong style="color:var(--text);">Mission:</strong> In partnership with parents, the community, and other stakeholders, we shall provide learners access to quality 21st century education and life-long skills through pioneering senior high school teaching in an atmosphere of structured, collective, and holistic learning experience.<br><br>
+          <strong style="color:var(--text);">Core Values:</strong> Makadiyos, Makatao, Makabansa, and Makakalikasan.
+        </p>
       </div>
-    </div>
+
+    </main>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">
-    <div class="toast-dot"></div>
-    <span id="toastMsg">Hours logged!</span>
-  </div>
-
-  <footer>
-    <p>G12-01CPG · <span>University of Makati </span> · Work Immersion Portfolio <span id="year"></span></p>
-  </footer>
-
+  <footer><p>G12-01CPG · <span>University of Makati</span> · Work Immersion Portfolio <span id="year"></span></p></footer>
+  
   <script type="module" src="script.js"></script>
 </body>
 </html>

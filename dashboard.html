@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dashboard — UMAK HUB</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <nav id="header">
+    <h1 id="title"><a href="dashboard.html">UMAK HUB</a></h1>
+    
+    <div style="display:flex; align-items:center; gap:12px; margin-left:auto;">
+      <button class="btn-primary" onclick="window._openLogModal()" style="padding: 8px 16px;">+ Log Hours</button>
+    </div>
+
+    <button id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="dash-wrap" id="dashWrap">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="profile-sidebar-card">
+        <div class="profile-sidebar-banner"></div>
+        <div class="profile-sidebar-body">
+          <div class="profile-sidebar-avatar" id="sidebarAvatar" style="background:var(--bg-card2);"></div>
+          <div class="profile-sidebar-name" id="sidebarName">Loading...</div>
+          <div class="profile-sidebar-meta" id="sidebarMeta"></div>
+        </div>
+      </div>
+
+      <div class="dash-nav-card">
+        <button class="dash-nav-item active" id="navHome">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button class="dash-nav-item" id="navImmersion">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          Work Immersion
+        </button>
+        <a href="members.html" class="dash-nav-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+          Members Directory
+        </a>
+        <a href="aboutus.html" class="dash-nav-item active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4l3 3"/></svg>
+          About UMak
+        </a>
+        <div class="dash-nav-divider"></div>
+        <button class="dash-nav-item" onclick="handleSignOut()" style="color:var(--red);">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="dash-main" id="dashMain">
+
+      <div id="viewHome">
+        <div class="greeting-card" id="greetingCard" style="margin-bottom: 22px;">
+          <div class="greeting-top" style="margin-bottom:0;">
+            <div class="greeting-text">
+              <h2 id="greetingTitle">Welcome back! 👋</h2>
+              <p id="greetingDate"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card hidden" id="vipCard">
+          <div class="sec-hdr">
+            <h2 class="sec-title" style="color:#ffd700;">G12-01CPG EXCLUSIVE <span class="vip-badge">VIP</span></h2>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">This exclusive hub is restricted to verified members only.</p>
+          <div class="section-members-grid" id="vipMembersGrid"></div>
+        </div>
+      </div>
+
+      <div id="viewImmersion" class="hidden">
+        
+        <div class="content-card" id="immersionSetupForm">
+          <div class="sec-hdr"><h2 class="sec-title">IMMERSION SETUP</h2></div>
+          <p style="margin-bottom: 20px; font-size:0.85rem; color:var(--text-muted);">Activate your work immersion tracker by defining your required goals below.</p>
+          <div class="fgroup">
+            <label class="flabel">Target Hours Required</label>
+            <input type="number" class="finput" id="setupTargetHours" value="80" min="1"/>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Immersion Purpose / Company</label>
+            <input type="text" class="finput" id="setupPurpose" placeholder="e.g. ICT Deployment at iACADEMY"/>
+          </div>
+          <button class="btn-primary" id="btnActivateImmersion" style="margin-top:10px;">Activate Tracker →</button>
+        </div>
+
+        <div class="dash-progress-card hidden" id="immersionTrackerPanel">
+          <div class="sec-hdr">
+            <h2 class="sec-title">MY IMMERSION PROGRESS</h2>
+            <span class="sec-badge navy" id="progressBadge">IN PROGRESS</span>
+          </div>
+          <p id="displayPurpose" style="font-size:0.8rem; color:var(--amber); margin-bottom: 14px; font-weight: 600;"></p>
+          
+          <div class="prog-lbl">
+            <span class="p-title">HOURS LOGGED</span>
+            <span class="p-count" id="myHoursCount">0 / 80 hrs</span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="myProgressBar" style="width:0%"></div>
+          </div>
+          <p class="prog-caption" id="myProgCaption">0% complete</p>
+          <div class="stat-row">
+            <div class="t-stat"><div class="tv blue" id="myLogged">0</div><div class="tl">Hours Logged</div></div>
+            <div class="t-stat"><div class="tv amber" id="myRemaining">80</div><div class="tl">Remaining</div></div>
+            <div class="t-stat"><div class="tv green" id="myDays">0</div><div class="tl">Days Attended</div></div>
+          </div>
+          
+          <div style="margin-top:22px; display:flex; gap:12px;">
+            <button class="btn-primary" onclick="window._openLogModal()">+ Log New Entry</button>
+            <a href="#" id="fullProfileBtn" class="btn-secondary">View Journal Portfolio</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-head-title">ADD IMMERSION HOURS</div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="frow">
+          <div class="fgroup"><label class="flabel">Date</label><input type="date" class="finput" id="logDate"/></div>
+          <div class="fgroup"><label class="flabel">Hours</label><input type="number" class="finput" id="logHours" min="0.5" step="0.5"/></div>
+        </div>
+        <div class="fgroup"><label class="flabel">Task Description</label><input type="text" class="finput" id="logTask"/></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-danger" onclick="closeModal()">Cancel</button>
+        <button class="btn-success" id="modalSubmit">Save Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+  <footer><p>G12-01CPG · Work Immersion Portfolio <span id="year"></span></p></footer>
+
+  <script type="module">
+    import { supabase } from './supabase.js';
+    import { requireAuth, signOut as authSignOut } from './auth.js';
+
+    window.handleSignOut = authSignOut;
+    let profile = null;
+
+    // Toast utility
+    let toastTimer;
+    function showToast(msg) {
+      clearTimeout(toastTimer);
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Navigation Toggle Logic
+    const btnHome = document.getElementById('navHome');
+    const btnImm = document.getElementById('navImmersion');
+    const viewHome = document.getElementById('viewHome');
+    const viewImm = document.getElementById('viewImmersion');
+
+    btnHome.addEventListener('click', () => {
+      btnHome.classList.add('active'); btnImm.classList.remove('active');
+      viewHome.classList.remove('hidden'); viewImm.classList.add('hidden');
+    });
+
+    btnImm.addEventListener('click', () => {
+      btnImm.classList.add('active'); btnHome.classList.remove('active');
+      viewImm.classList.remove('hidden'); viewHome.classList.add('hidden');
+    });
+
+    // Modal Logic
+    window._openLogModal = () => {
+      document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('modalOverlay').classList.add('open');
+    };
+    window.closeModal = () => document.getElementById('modalOverlay').classList.remove('open');
+
+    // Log Submission (Saving to the newly created journal_entries table!)
+    document.getElementById('modalSubmit').addEventListener('click', async () => {
+      const hrs = parseFloat(document.getElementById('logHours').value);
+      const date = document.getElementById('logDate').value;
+      const task = document.getElementById('logTask').value || 'Immersion task';
+
+      if (!hrs || hrs <= 0) return showToast("Enter valid hours.");
+
+      // 1. Save to journal
+      await supabase.from('journal_entries').insert({ student_id: profile.id, log_date: date, hrs, task });
+      
+      // 2. Update profile totals
+      const newHours = Math.min((profile.hours||0) + hrs, profile.total);
+      const newDays = (profile.days||0) + 1;
+      await supabase.from('profiles').update({ hours: newHours, days: newDays }).eq('id', profile.id);
+      
+      profile.hours = newHours; profile.days = newDays;
+      updateTrackerUI();
+      closeModal();
+      showToast(`+${hrs}h logged successfully!`);
+    });
+
+    // Init App
+    (async () => {
+      const auth = await requireAuth();
+      if (!auth) return;
+      profile = auth.profile;
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // UI Setup
+      document.getElementById('greetingTitle').textContent = `Welcome back, ${profile.first_name}! 👋`;
+      document.getElementById('greetingDate').textContent = new Date().toLocaleDateString('en-PH', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+      document.getElementById('sidebarName').textContent = `${profile.last_name}, ${profile.first_name}`;
+      document.getElementById('fullProfileBtn').href = `student.html?id=${profile.id}`;
+
+      // ══════════════════════════════════════════════════════
+      // BULLETPROOF VIP LOGIC
+      // ══════════════════════════════════════════════════════
+      const VIP_EMAILS = [
+        'your.email@umak.edu.ph',       // <-- Replace with your email!
+        'classmate1@umak.edu.ph'        // <-- Replace with classmates!
+      ];
+
+      // Check if current user is in the strict email list
+      const isVIP = VIP_EMAILS.includes(auth.session.user.email);
+
+      if (isVIP) {
+        document.getElementById('vipCard').classList.remove('hidden');
+        document.getElementById('vipCard').classList.add('vip-cpg');
+        
+        // Fetch ONLY users whose emails are exactly in the VIP_EMAILS array
+        const { data: vipMembers } = await supabase.from('profiles')
+          .select('id, first_name, last_name, avatar_url, email')
+          .in('email', VIP_EMAILS)
+          .order('first_name');
+
+        if (vipMembers) {
+          document.getElementById('vipMembersGrid').innerHTML = vipMembers.map(m => {
+            const ini = (m.first_name[0] + m.last_name[0]).toUpperCase();
+            const imgTag = m.avatar_url ? `<img src="${m.avatar_url}"/>` : ini;
+            return `<a href="student.html?id=${m.id}" class="sm-avatar">
+              <div class="sm-avatar-circle">${imgTag}</div>
+              <div class="sm-avatar-name">${m.first_name}</div>
+            </a>`;
+          }).join('');
+        }
+      }
+
+      // ══════════════════════════════════════════════════════
+      // IMMERSION TRACKER LOGIC
+      // ══════════════════════════════════════════════════════
+      if (profile.immersion_active) {
+        document.getElementById('immersionSetupForm').classList.add('hidden');
+        document.getElementById('immersionTrackerPanel').classList.remove('hidden');
+        updateTrackerUI();
+      }
+
+      document.getElementById('btnActivateImmersion').addEventListener('click', async () => {
+        const tgt = parseInt(document.getElementById('setupTargetHours').value);
+        const purp = document.getElementById('setupPurpose').value;
+        
+        await supabase.from('profiles').update({ total: tgt, immersion_purpose: purp, immersion_active: true }).eq('id', profile.id);
+        profile.total = tgt; profile.immersion_purpose = purp; profile.immersion_active = true;
+        
+        document.getElementById('immersionSetupForm').classList.add('hidden');
+        document.getElementById('immersionTrackerPanel').classList.remove('hidden');
+        updateTrackerUI();
+        showToast("Tracker activated!");
+      });
+
+    })();
+
+    function updateTrackerUI() {
+      if (!profile) return;
+      const pct = Math.min(Math.round((profile.hours / profile.total) * 100), 100);
+      document.getElementById('myProgressBar').style.width = pct + '%';
+      document.getElementById('myHoursCount').textContent = profile.hours + ' / ' + profile.total + ' hrs';
+      document.getElementById('myLogged').textContent = profile.hours;
+      document.getElementById('myRemaining').textContent = Math.max(profile.total - profile.hours, 0);
+      document.getElementById('myDays').textContent = profile.days || 0;
+      document.getElementById('myProgCaption').textContent = pct + '% complete';
+      if (profile.immersion_purpose) document.getElementById('displayPurpose').textContent = profile.immersion_purpose.toUpperCase();
+    }
+  </script>
+</body>
+</html>
